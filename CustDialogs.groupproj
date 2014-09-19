@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{E9AAE967-F8E5-41AC-905B-8B80849285A5}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Install\CustomDialogs.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\CustomEdit\CustomEdit.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CustomDialogs">
+        <MSBuild Projects="Install\CustomDialogs.dproj"/>
+    </Target>
+    <Target Name="CustomDialogs:Clean">
+        <MSBuild Projects="Install\CustomDialogs.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CustomDialogs:Make">
+        <MSBuild Projects="Install\CustomDialogs.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CustomEdit">
+        <MSBuild Projects="Demos\CustomEdit\CustomEdit.dproj"/>
+    </Target>
+    <Target Name="CustomEdit:Clean">
+        <MSBuild Projects="Demos\CustomEdit\CustomEdit.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CustomEdit:Make">
+        <MSBuild Projects="Demos\CustomEdit\CustomEdit.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CustomDialogs;CustomEdit"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CustomDialogs:Clean;CustomEdit:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CustomDialogs:Make;CustomEdit:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

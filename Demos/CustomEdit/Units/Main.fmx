@@ -1,0 +1,97 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 567
+  ClientWidth = 384
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMobile = True
+  DesignerWidth = 384
+  DesignerHeight = 567
+  DesignerDeviceName = ''
+  DesignerOrientation = 0
+  DesignerOSVersion = ''
+  object Edit1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 5
+    Position.X = 24.000000000000000000
+    Position.Y = 98.000000000000000000
+    Width = 201.000000000000000000
+    Height = 32.000000000000000000
+    TextPrompt = 'Custom Edit'
+  end
+  object Edit2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 4
+    Position.X = 24.000000000000000000
+    Position.Y = 162.000000000000000000
+    Width = 201.000000000000000000
+    Height = 32.000000000000000000
+    TextPrompt = 'Custom Combobox'
+  end
+  object Edit3: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Position.X = 24.000000000000000000
+    Position.Y = 234.000000000000000000
+    Width = 201.000000000000000000
+    Height = 32.000000000000000000
+    TextPrompt = 'Custom Trackbar'
+  end
+  object CustomDialogs1: TCustomDialogs
+    Parentx = Edit1
+    Title = 'Custom Dialogs'
+    Types = Edit
+    ComboBoxSettings.Items.Strings = (
+      '1'
+      '2'
+      '3'
+      '4')
+    ComboBoxSettings.ReturnText = False
+    TrackBarSettings.Minimum = 100.000000000000000000
+    TrackBarSettings.Maximum = 5.000000000000000000
+    TrackBarSettings.Value = 5.000000000000000000
+    TrackBarSettings.ReturnText = False
+    BackgroundColor = claNull
+    Left = 264
+    Top = 96
+  end
+  object CustomDialogs2: TCustomDialogs
+    Parentx = Edit2
+    Title = 'Custom Dialogs'
+    Types = ComboBox
+    ComboBoxSettings.Items.Strings = (
+      'Value 1'
+      'Value 2'
+      'Value 3'
+      'Value 4'
+      'Value 5')
+    ComboBoxSettings.ReturnText = True
+    TrackBarSettings.Minimum = 100.000000000000000000
+    TrackBarSettings.Maximum = 5.000000000000000000
+    TrackBarSettings.Value = 5.000000000000000000
+    TrackBarSettings.ReturnText = False
+    BackgroundColor = claNull
+    Left = 264
+    Top = 168
+  end
+  object CustomDialogs3: TCustomDialogs
+    Parentx = Edit3
+    Title = 'Custom Dialogs'
+    Types = TrackBar
+    ComboBoxSettings.Items.Strings = (
+      '1'
+      '2'
+      '3'
+      '4')
+    ComboBoxSettings.ReturnText = False
+    TrackBarSettings.Maximum = 100.000000000000000000
+    TrackBarSettings.Value = 30.000000000000000000
+    TrackBarSettings.ReturnText = False
+    BackgroundColor = claNull
+    Left = 264
+    Top = 240
+  end
+end
