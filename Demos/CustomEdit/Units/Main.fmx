@@ -40,6 +40,15 @@ object Form3: TForm3
     Height = 32.000000000000000000
     TextPrompt = 'Custom Trackbar'
   end
+  object Button1: TButton
+    Height = 22.000000000000000000
+    Position.X = 152.000000000000000000
+    Position.Y = 328.000000000000000000
+    TabOrder = 13
+    Text = 'Button1'
+    Width = 80.000000000000000000
+    OnClick = Button1Click
+  end
   object CustomDialogs1: TCustomDialogs
     Parentx = Edit1
     Title = 'Custom Dialogs'
@@ -68,12 +77,13 @@ object Form3: TForm3
       'Value 3'
       'Value 4'
       'Value 5')
-    ComboBoxSettings.ReturnText = True
+    ComboBoxSettings.ReturnText = False
     TrackBarSettings.Minimum = 100.000000000000000000
     TrackBarSettings.Maximum = 5.000000000000000000
     TrackBarSettings.Value = 5.000000000000000000
     TrackBarSettings.ReturnText = False
     BackgroundColor = claNull
+    OnPopUpClose = CustomDialogs2PopUpClose
     Left = 264
     Top = 168
   end

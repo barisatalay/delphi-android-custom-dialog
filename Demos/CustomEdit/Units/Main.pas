@@ -15,6 +15,10 @@ type
     CustomDialogs1: TCustomDialogs;
     CustomDialogs2: TCustomDialogs;
     CustomDialogs3: TCustomDialogs;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure CustomDialogs2PopUpClose(ResultText: string; ComboIndex: Integer;
+      TrackValue: Single);
   private
     { Private declarations }
   public
@@ -27,5 +31,16 @@ var
 implementation
 
 {$R *.fmx}
+
+procedure TForm3.Button1Click(Sender: TObject);
+begin
+  Edit1.Text := CustomDialogs2.ComboBoxSettings.ItemIndex.ToString;
+end;
+
+procedure TForm3.CustomDialogs2PopUpClose(ResultText: string;
+  ComboIndex: Integer; TrackValue: Single);
+begin
+   Edit2.Text := ResultText;
+end;
 
 end.

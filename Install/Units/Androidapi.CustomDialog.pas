@@ -20,6 +20,7 @@ Uses System.Classes, System.UITypes, System.Actions, System.SysUtils, System.Typ
 Type
 
   TCustomType = (Edit,ComboBox,TrackBar);
+  TOnPopUpClose = procedure(ResultText: String; ComboIndex: Integer; TrackValue: Single) of object;
 
   TComboSettings = class(TPersistent)
     private
@@ -72,6 +73,7 @@ Type
 
   TCustomDialogs = class(TComponent)
   private
+    FOnPopUpClose: TOnPopUpClose;
     FComboSetting: TComboSettings;
     FTrackSetting: TTrackSettings;
     FEditSettings: TEditSettings;
@@ -114,14 +116,15 @@ Type
     destructor  Destroy; override;
     procedure   Execute;
   published
-    property Parentx          : TCustomEdit    read FEdit       write SetComponent;
-    property Title            : String         read FTitle      write FTitle;
-    property Types            : TCustomType    read FKind       write FKind;
-    property TrackValue       : Single         read FValue      write FValue;
-    property ComboBoxSettings : TComboSettings read GetComboSet write SetComboSet;
-    property TrackBarSettings : TTrackSettings read GetTrackSet write SetTrackSet;
-    property EditSettings     : TEditSettings  read GetEditSet  write SetEditSet;
-    property BackgroundColor  : TAlphaColor    read GetColor    write SetColor default TAlphaColorRec.Black;
+    property Parentx          : TCustomEdit    read FEdit         write SetComponent;
+    property Title            : String         read FTitle        write FTitle;
+    property Types            : TCustomType    read FKind         write FKind;
+    property TrackValue       : Single         read FValue        write FValue;
+    property ComboBoxSettings : TComboSettings read GetComboSet   write SetComboSet;
+    property TrackBarSettings : TTrackSettings read GetTrackSet   write SetTrackSet;
+    property EditSettings     : TEditSettings  read GetEditSet    write SetEditSet;
+    property BackgroundColor  : TAlphaColor    read GetColor      write SetColor default TAlphaColorRec.Black;
+    property OnPopUpClose     : TOnPopUpClose  read FOnPopUpClose write FOnPopUpClose;
   end;
 
 procedure Register;
@@ -447,15 +450,18 @@ begin
   Center.Visible := False;
 
   if FKind = TCustomType.Edit then
+  begin
     if ResultText <> FRes.Text then
     begin
       ResultText := FRes.Text;
       FEdit.Text := ResultText;
     end;
-
+    FOnPopUpClose(FRes.Text, -1, -1);
+  end;
   if FKind = TCustomType.ComboBox then
   begin
     if FCom.Selected <> nil then
+    begin
       if ResultText <> FCom.Selected.Text then
       begin
         if FCom.ItemIndex <> -1 then
@@ -465,6 +471,8 @@ begin
             FEdit.Text := ResultText;
         end
       end;
+      FOnPopUpClose(FCom.Selected.Text, FCom.ItemIndex, -1);
+    end;
   end;
 
   if FKind = TCustomType.TrackBar then
@@ -474,6 +482,8 @@ begin
 
     if FTrackSetting.ReturnText then
       FEdit.Text := FValue.ToString;
+
+    FOnPopUpClose(FTrack.Value.ToString, -1, FTrack.Value);
   end;
   FreeNil;
 end;
