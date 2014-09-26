@@ -376,8 +376,14 @@ begin
 
               if (BG.Height - (xCenter.Position.X + xCenter.Height))  < (xCenter.Position.X) then
               begin
+                xCenter.Height := FForm.Height - 50;
+                if (FForm.Height - 50 ) > 400 then
+                  xCenter.Height := 400;
+
+                if xCenter.Height > (50 + (Items.Count * 45)) then
+                  xCenter.Height := 50 + (Items.Count * 45);
+
                 ShowScrollBars := True;
-                xCenter.Height := BG.Height - xCenter.Position.X;
               end;
             end;
           end;
