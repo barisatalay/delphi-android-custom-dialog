@@ -2,52 +2,85 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 567
-  ClientWidth = 384
+  ClientHeight = 615
+  ClientWidth = 360
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   DesignerMobile = True
-  DesignerWidth = 384
-  DesignerHeight = 567
-  DesignerDeviceName = ''
+  DesignerWidth = 360
+  DesignerHeight = 640
+  DesignerDeviceName = 'Samsung Galaxy S4'
   DesignerOrientation = 0
   DesignerOSVersion = ''
   object Edit1: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 5
-    Position.X = 24.000000000000000000
-    Position.Y = 98.000000000000000000
+    TabOrder = 6
+    Position.X = 9.000000000000000000
+    Position.Y = 26.000000000000000000
     Width = 201.000000000000000000
     Height = 32.000000000000000000
     TextPrompt = 'Custom Edit'
   end
   object Edit2: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 4
-    Position.X = 24.000000000000000000
-    Position.Y = 162.000000000000000000
+    TabOrder = 5
+    Position.X = 9.000000000000000000
+    Position.Y = 90.000000000000000000
     Width = 201.000000000000000000
     Height = 32.000000000000000000
     TextPrompt = 'Custom Combobox'
   end
   object Edit3: TEdit
     Touch.InteractiveGestures = [LongTap, DoubleTap]
-    TabOrder = 3
-    Position.X = 24.000000000000000000
-    Position.Y = 234.000000000000000000
+    TabOrder = 4
+    Position.X = 9.000000000000000000
+    Position.Y = 162.000000000000000000
     Width = 201.000000000000000000
     Height = 32.000000000000000000
     TextPrompt = 'Custom Trackbar'
   end
   object Button1: TButton
+    Align = Top
     Height = 22.000000000000000000
-    Position.X = 152.000000000000000000
-    Position.Y = 328.000000000000000000
-    TabOrder = 13
+    TabOrder = 14
     Text = 'Button1'
-    Width = 80.000000000000000000
+    Width = 360.000000000000000000
     OnClick = Button1Click
+  end
+  object ListBox1: TListBox
+    Align = Bottom
+    Height = 200.000000000000000000
+    Position.Y = 415.000000000000000000
+    TabOrder = 22
+    Width = 360.000000000000000000
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    object ListBoxItem1: TListBoxItem
+      Height = 40.000000000000000000
+      TabOrder = 0
+      Text = 'ListBoxItem1'
+      Width = 360.000000000000000000
+    end
+  end
+  object Edit4: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Position.X = 9.000000000000000000
+    Position.Y = 234.000000000000000000
+    Width = 201.000000000000000000
+    Height = 32.000000000000000000
+    TextPrompt = 'Custom Menu'
+  end
+  object Button2: TButton
+    Height = 48.000000000000000000
+    Position.X = 240.000000000000000000
+    Position.Y = 232.000000000000000000
+    TabOrder = 34
+    Text = 'Add Item'
+    Width = 97.000000000000000000
+    OnClick = Button2Click
   end
   object CustomDialogs1: TCustomDialogs
     Parentx = Edit1
@@ -64,8 +97,10 @@ object Form3: TForm3
     TrackBarSettings.Value = 5.000000000000000000
     TrackBarSettings.ReturnText = False
     BackgroundColor = claNull
-    Left = 264
-    Top = 96
+    OnPopUpClose = CustomDialogs1PopUpClose
+    MenuSettings.ReturnText = True
+    Left = 272
+    Top = 24
   end
   object CustomDialogs2: TCustomDialogs
     Parentx = Edit2
@@ -84,8 +119,9 @@ object Form3: TForm3
     TrackBarSettings.ReturnText = False
     BackgroundColor = claNull
     OnPopUpClose = CustomDialogs2PopUpClose
-    Left = 264
-    Top = 168
+    MenuSettings.ReturnText = True
+    Left = 272
+    Top = 96
   end
   object CustomDialogs3: TCustomDialogs
     Parentx = Edit3
@@ -101,7 +137,38 @@ object Form3: TForm3
     TrackBarSettings.Value = 30.000000000000000000
     TrackBarSettings.ReturnText = False
     BackgroundColor = claNull
+    MenuSettings.ReturnText = True
+    Left = 272
+    Top = 168
+  end
+  object CustomDialogs4: TCustomDialogs
+    Parentx = ListBoxItem1
+    Types = TrackBar
+    ComboBoxSettings.ReturnText = True
+    TrackBarSettings.ReturnText = False
+    BackgroundColor = claNull
+    OnPopUpClose = CustomDialogs4PopUpClose
+    MenuSettings.ReturnText = True
+    Left = 144
+    Top = 424
+  end
+  object CustomDialogs5: TCustomDialogs
+    Parentx = Edit4
+    Title = 'Custom Dialogs'
+    Types = Menu
+    ComboBoxSettings.Items.Strings = (
+      '1'
+      '2'
+      '3'
+      '4')
+    ComboBoxSettings.ReturnText = False
+    TrackBarSettings.Maximum = 100.000000000000000000
+    TrackBarSettings.Value = 30.000000000000000000
+    TrackBarSettings.ReturnText = False
+    BackgroundColor = claNull
+    OnPopUpClose = CustomDialogs5PopUpClose
+    MenuSettings.ReturnText = True
     Left = 264
-    Top = 240
+    Top = 288
   end
 end
