@@ -6,8 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   Androidapi.CustomDialog, FMX.Edit, FMX.StdCtrls, FMX.ListBox, FMX.Layouts,
-  FMX.Objects, FMX.ListView.Types, FMX.ListView,
-  Androidapi.CustomDialogForListview;
+  FMX.Objects, FMX.ListView.Types, FMX.ListView;
 
 type
   TForm3 = class(TForm)

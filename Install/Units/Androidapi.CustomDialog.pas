@@ -634,6 +634,9 @@ begin
         FOnPopUpClose(FMenu.Selected.Text, FMenu.ItemIndex, -1, FItem);
   end;
 
+  if Parentx is TListView then
+    (Parentx as TListView).Selected := nil;
+
   FreeNil;
 end;
 
