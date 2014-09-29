@@ -7,10 +7,11 @@ object Form3: TForm3
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   DesignerMobile = True
   DesignerWidth = 360
-  DesignerHeight = 640
-  DesignerDeviceName = 'Samsung Galaxy S4'
+  DesignerHeight = 615
+  DesignerDeviceName = ''
   DesignerOrientation = 0
   DesignerOSVersion = ''
   object Edit1: TEdit
@@ -40,19 +41,11 @@ object Form3: TForm3
     Height = 32.000000000000000000
     TextPrompt = 'Custom Trackbar'
   end
-  object Button1: TButton
-    Align = Top
-    Height = 22.000000000000000000
-    TabOrder = 14
-    Text = 'Button1'
-    Width = 360.000000000000000000
-    OnClick = Button1Click
-  end
   object ListBox1: TListBox
     Align = Bottom
-    Height = 200.000000000000000000
-    Position.Y = 415.000000000000000000
-    TabOrder = 22
+    Height = 71.000000000000000000
+    Position.Y = 544.000000000000000000
+    TabOrder = 21
     Width = 360.000000000000000000
     DefaultItemStyles.ItemStyle = ''
     DefaultItemStyles.GroupHeaderStyle = ''
@@ -61,7 +54,7 @@ object Form3: TForm3
       Height = 40.000000000000000000
       TabOrder = 0
       Text = 'ListBoxItem1'
-      Width = 360.000000000000000000
+      Width = 356.000000000000000000
     end
   end
   object Edit4: TEdit
@@ -73,14 +66,16 @@ object Form3: TForm3
     Height = 32.000000000000000000
     TextPrompt = 'Custom Menu'
   end
-  object Button2: TButton
-    Height = 48.000000000000000000
-    Position.X = 240.000000000000000000
-    Position.Y = 232.000000000000000000
-    TabOrder = 34
-    Text = 'Add Item'
-    Width = 97.000000000000000000
-    OnClick = Button2Click
+  object ListView1: TListView
+    ItemAppearanceClassName = 'TListItemAppearance'
+    ItemEditAppearanceClassName = 'TListItemShowCheckAppearance'
+    HeaderAppearanceClassName = 'TListHeaderObjects'
+    FooterAppearanceClassName = 'TListHeaderObjects'
+    Align = Bottom
+    Height = 192.000000000000000000
+    Position.Y = 352.000000000000000000
+    TabOrder = 44
+    Width = 360.000000000000000000
   end
   object CustomDialogs1: TCustomDialogs
     Parentx = Edit1
@@ -149,8 +144,8 @@ object Form3: TForm3
     BackgroundColor = claNull
     OnPopUpClose = CustomDialogs4PopUpClose
     MenuSettings.ReturnText = True
-    Left = 144
-    Top = 424
+    Left = 200
+    Top = 560
   end
   object CustomDialogs5: TCustomDialogs
     Parentx = Edit4
@@ -170,5 +165,16 @@ object Form3: TForm3
     MenuSettings.ReturnText = True
     Left = 264
     Top = 288
+  end
+  object CustomDialogs6: TCustomDialogs
+    Parentx = ListView1
+    Types = Menu
+    ComboBoxSettings.ReturnText = True
+    TrackBarSettings.ReturnText = True
+    BackgroundColor = claNull
+    OnPopUpClose = CustomDialogs6PopUpClose
+    MenuSettings.ReturnText = False
+    Left = 232
+    Top = 432
   end
 end

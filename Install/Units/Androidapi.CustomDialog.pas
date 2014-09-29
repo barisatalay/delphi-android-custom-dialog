@@ -11,14 +11,14 @@ Notes:
 
 interface
 Uses System.Classes, System.UITypes, System.Actions, System.SysUtils, System.Types,
-     FMX.Edit, FMX.Objects, FMX.Layouts, FMX.Controls, FMX.Forms, FMX.Types, FMX.StdCtrls, FMX.ListBox,
+     FMX.Edit, FMX.Objects, FMX.Layouts, FMX.Controls, FMX.Forms, FMX.Types, FMX.StdCtrls, FMX.ListBox, FMX.ListView,
      FMX.Graphics, Generics.Collections
      ;
 
 Type
 
   TCustomType                 = (Edit,ComboBox,TrackBar,Menu);
-  TOnPopUpClose               = procedure(ResultText: String; ComboIndex: Integer; TrackValue: Single) of object;
+  TOnPopUpClose               = procedure(ResultText: String; ComboIndex: Integer; TrackValue: Single; ListViewItem: TListViewItem) of object;
 
   TComboSettings              = class(TPersistent)
     private
@@ -109,11 +109,13 @@ Type
     FKind                     : TCustomType;
     FValue                    : Single;
     FColor                    : TAlphaColor;
+    FItem                     : TListViewItem;
     function                  GetComboSetting: TComboSettings;
     procedure                 SetComboSetting(const Value: TComboSettings);
     procedure                 FreeNil;
     procedure                 SetComponent(const Value: TControl);
     procedure                 FClick(Sender: TObject);
+    procedure                 LClick(const Sender: TObject; const AItem: TListViewItem);
     procedure                 TamamClick(Sender: TObject);
     procedure                 IptalClick(Sender: TObject);
     procedure                 xItemClick(const Sender: TCustomListBox; const Item: TListBoxItem) ;
@@ -451,6 +453,10 @@ begin
   if FKind = TCustomType.TrackBar then
     if Assigned(FTrack) then FTrack.Free;
 
+  if FKind = TCustomType.Menu then
+    if Assigned(FMenu) then FMenu.Free;
+    
+
   TamamBut.Free;
   IptalBut.Free;
 
@@ -497,6 +503,13 @@ begin
   FreeNil;
 end;
 
+procedure TCustomDialogs.LClick(const Sender: TObject;
+  const AItem: TListViewItem);
+begin
+  FItem := AItem;
+  FClick(Sender);
+end;
+
 procedure TCustomDialogs.SetColor(const Value: TAlphaColor);
 begin
   if FColor <> Value then
@@ -521,9 +534,13 @@ begin
     if Value <> FEdit then
     begin
       FEdit := Value;
-      if (Parentx is TControl) then
 
-      (Parentx as TControl).OnClick := FClick;
+      if not (Parentx is TListView) then
+      begin
+        if (Parentx is TControl) then
+          (Parentx as TControl).OnClick := FClick;
+      end else
+        (Parentx as TListView).OnItemClick := LClick;
     end
   else
     FEdit := nil;
@@ -561,7 +578,7 @@ begin
         (FEdit as TTextControl).Text := ResultText;
     end;
     if Assigned(OnPopUpClose) then
-      FOnPopUpClose(FRes.Text, 1, 0);
+      FOnPopUpClose(FRes.Text, 1, 0,nil);
   end;
   if FKind = TCustomType.ComboBox then
   begin
@@ -578,7 +595,7 @@ begin
         end
       end;
       if Assigned(OnPopUpClose) then
-        FOnPopUpClose(FCom.Selected.Text, FCom.ItemIndex, -1);
+        FOnPopUpClose(FCom.Selected.Text, FCom.ItemIndex, -1,nil);
     end;
   end;
 
@@ -591,7 +608,7 @@ begin
       if (FEdit is TTextControl) then
         (FEdit as TTextControl).Text := ResultText;
     if Assigned(OnPopUpClose) then
-      FOnPopUpClose(FTrack.Value.ToString, -1, FTrack.Value);
+      FOnPopUpClose(FTrack.Value.ToString, -1, FTrack.Value, nil);
   end;
 
   FreeNil;
@@ -614,9 +631,9 @@ begin
         ResultText := FMenu.Selected.Text;
       end;
     if Assigned(OnPopUpClose) then
-        FOnPopUpClose(FMenu.Selected.Text, FMenu.ItemIndex, -1);
+        FOnPopUpClose(FMenu.Selected.Text, FMenu.ItemIndex, -1, FItem);
   end;
-  
+
   FreeNil;
 end;
 
@@ -777,7 +794,7 @@ begin
     if Assigned(Source) then
     begin
 //      xItems.Add(TMenuSettings(Source).FItems);
-      xIndex := TComboSettings(Source).FIndex;
+      xIndex := TMenuSettings(Source).FIndex;
     end else
     begin
 //      FItems.Add(TMenuSettings(Source).FItems);
