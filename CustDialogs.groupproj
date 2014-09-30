@@ -9,6 +9,9 @@
         <Projects Include="Demos\CustomEdit\CustomEdit.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Demos\XE5\XE5CustomDialog.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="CustomEdit:Make">
         <MSBuild Projects="Demos\CustomEdit\CustomEdit.dproj" Targets="Make"/>
     </Target>
+    <Target Name="XE5CustomDialog">
+        <MSBuild Projects="Demos\XE5\XE5CustomDialog.dproj"/>
+    </Target>
+    <Target Name="XE5CustomDialog:Clean">
+        <MSBuild Projects="Demos\XE5\XE5CustomDialog.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XE5CustomDialog:Make">
+        <MSBuild Projects="Demos\XE5\XE5CustomDialog.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="CustomDialogs;CustomEdit"/>
+        <CallTarget Targets="CustomDialogs;CustomEdit;XE5CustomDialog"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="CustomDialogs:Clean;CustomEdit:Clean"/>
+        <CallTarget Targets="CustomDialogs:Clean;CustomEdit:Clean;XE5CustomDialog:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="CustomDialogs:Make;CustomEdit:Make"/>
+        <CallTarget Targets="CustomDialogs:Make;CustomEdit:Make;XE5CustomDialog:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

@@ -130,6 +130,8 @@ Type
     procedure                 SetColor(const Value: TAlphaColor);
     function GetMenuSet: TMenuSettings;
     procedure SetMenuSet(const Value: TMenuSettings);
+    function GetKind: TCustomType;
+    procedure SetKind(const Value: TCustomType);
   public
     ResultText                : String;
     constructor               Create(AOwner: TComponent); override;
@@ -138,7 +140,7 @@ Type
   published
     property Parentx          : TControl       read FEdit         write SetComponent;
     property Title            : String         read FTitle        write FTitle;
-    property Types            : TCustomType    read FKind         write FKind;
+    property Types            : TCustomType    read GetKind       write SetKind;
     property TrackValue       : Single         read FValue        write FValue;
     property ComboBoxSettings : TComboSettings read GetComboSet   write SetComboSet;
     property TrackBarSettings : TTrackSettings read GetTrackSet   write SetTrackSet;
@@ -193,7 +195,12 @@ begin
   with Bg do
   begin
     Parent     := FForm AS TForm;
-    Align      := TAlignLayout.Contents;
+    {$IF CompilerVersion > 26}
+      Align      := TAlignLayout.Contents;
+    {$ELSE}
+      Align      := TAlignLayout.alClient;
+    {$ENDIF}
+
     Fill.Color := TAlphaColorRec.Black;
     Opacity    := 0.5;
     Sides      := [];
@@ -206,7 +213,11 @@ begin
       Width        := 270;
       Stroke.Color := $FFB1B1B1;
       Fill.Color   := TAlphaColorRec.Black;//FColor
-      Align        := TAlignLayout.None;
+      {$IF CompilerVersion > 26}
+        Align      := TAlignLayout.None;
+      {$ELSE}
+        Align      := TAlignLayout.alNone;
+      {$ENDIF}
 
       if BG.Height < 600 then
         Position.Y   := 50
@@ -219,15 +230,22 @@ begin
       begin
         Parent       := xCenter;
         Text         := Title;
-        Align        := TAlignLayout.Top;
+        {$IF CompilerVersion > 26}
+          Align        := TAlignLayout.Top;
+          HorzTextAlign := TTextAlign.Leading;
+          with TextSettings do
+          begin
+            FontColor := TAlphaColorRec.White;
+            Font.Size := 20;
+          end;
+        {$ELSE}
+          Align        := TAlignLayout.alTop;
+          HorzTextAlign := TTextAlign.taLeading;
+          Color := TAlphaColorRec.White;
+          Font.Size := 20;
+        {$ENDIF}
         Height       := 50;
         Margins.Left := 10;
-        HorzTextAlign := TTextAlign.Leading;
-        with TextSettings do
-        begin
-          FontColor := TAlphaColorRec.White;
-          Font.Size := 20;
-        end;
       end;
 
       {$REGION 'Butonlar'}
@@ -237,7 +255,11 @@ begin
         with Bot do
         begin
           Parent       := xCenter;
-          Align        := TAlignLayout.Bottom;
+          {$IF CompilerVersion > 26}
+            Align        := TAlignLayout.Bottom;
+          {$ELSE}
+            Align        := TAlignLayout.alBottom;
+          {$ENDIF}
           Fill.Color   := $FFC3C3C3;
           Sides        := [];
           Height       := 50;
@@ -247,7 +269,11 @@ begin
           with IptalBut do
           begin
             Parent  := Bot;
-            Align   := TAlignLayout.Left;
+            {$IF CompilerVersion > 26}
+              Align   := TAlignLayout.Left;
+            {$ELSE}
+              Align   := TAlignLayout.alLeft;
+            {$ENDIF}
             Text    := 'Ýptal';
             Height  := 45;
             Width   := 129;
@@ -264,7 +290,12 @@ begin
           with TamamBut do
           begin
             Parent  := Bot;
-            Align   := TAlignLayout.Left;
+
+            {$IF CompilerVersion > 26}
+              Align   := TAlignLayout.Left;
+            {$ELSE}
+              Align   := TAlignLayout.alLeft;
+            {$ENDIF}
             Text    := 'Tamam';
             Height  := 45;
             Width   := 129;
@@ -285,7 +316,11 @@ begin
       with Lay do
       begin
         Parent := xCenter;
-        Align := TAlignLayout.Client;
+        {$IF CompilerVersion > 26}
+          Align := TAlignLayout.Client;
+        {$ELSE}
+          Align := TAlignLayout.alClient;
+        {$ENDIF}
 
         if FKind <> TCustomType.Menu then
         begin
@@ -293,7 +328,11 @@ begin
           with IC do
           begin
             Parent     := Lay;
-            Align      := TAlignLayout.Center;
+            {$IF CompilerVersion > 26}
+              Align := TAlignLayout.Center;
+            {$ELSE}
+              Align := TAlignLayout.alCenter;
+            {$ENDIF}
             Height     := 40;
             Width      := 233;
             Fill.Color := $FFE0E0E0;
@@ -306,7 +345,11 @@ begin
               with FRes do
               begin
                 Parent   := IC;
-                Align    := TAlignLayout.Client;
+                {$IF CompilerVersion > 26}
+                  Align := TAlignLayout.Client;
+                {$ELSE}
+                  Align := TAlignLayout.alClient;
+                {$ENDIF}
                 with Margins Do
                 begin
                   Left  := 5;
@@ -320,7 +363,11 @@ begin
               with FCom do
               begin
                 Parent        := IC;
-                Align         := TAlignLayout.Client;
+                {$IF CompilerVersion > 26}
+                  Align := TAlignLayout.Client;
+                {$ELSE}
+                  Align := TAlignLayout.alClient;
+                {$ENDIF}
                 if Items.Count > 0 then
                   Items.Clear;
                 Items.Assign(FComboSetting.FItems);
@@ -338,7 +385,11 @@ begin
               with FTrack do
               begin
                 Parent  := IC;
-                Align   := TAlignLayout.Top;
+                {$IF CompilerVersion > 26}
+                  Align   := TAlignLayout.Top;
+                {$ELSE}
+                  Align   := TAlignLayout.alTop;
+                {$ENDIF}
                 with Margins Do
                 begin
                   Left  := 5;
@@ -354,7 +405,11 @@ begin
           with FMenu do
           begin
             Parent := Lay;
-            Align  := TAlignLayout.Client;
+            {$IF CompilerVersion > 26}
+              Align := TAlignLayout.Client;
+            {$ELSE}
+              Align := TAlignLayout.alClient;
+            {$ENDIF}
             ShowScrollBars := False;
             if Items.Count > 0 then
               Items.Clear;
@@ -373,7 +428,7 @@ begin
             begin
               for I := 0 to Items.Count -1 do
                 ListItems[i].Height := 45;
-                
+
               xCenter.height := 50 + (Items.Count * 45);
 
               if (BG.Height - (xCenter.Position.X + xCenter.Height))  < (xCenter.Position.X) then
@@ -487,6 +542,11 @@ begin
   Result := FEditSettings;
 end;
 
+function TCustomDialogs.GetKind: TCustomType;
+begin
+  Result := FKind;
+end;
+
 function TCustomDialogs.GetMenuSet: TMenuSettings;
 begin
   Result := FMenuSettings;
@@ -550,6 +610,21 @@ procedure TCustomDialogs.SetEditSet(const Value: TEditSettings);
 begin
   if FEditSettings <> Value then
     FEditSettings := Value;
+end;
+
+procedure TCustomDialogs.SetKind(const Value: TCustomType);
+begin
+  if Value <> FKind then
+  begin
+    {$IF CompilerVersion <= 26}
+      if Value = TCustomType.Menu then
+      begin
+        Raise EActionError.CreateFMT('Only XE6 and higher supported ''Menu'' types! ', ['']);
+        Exit;
+      end;
+    {$ENDIF}
+    FKind := Value;
+  end;
 end;
 
 procedure TCustomDialogs.SetMenuSet(const Value: TMenuSettings);
