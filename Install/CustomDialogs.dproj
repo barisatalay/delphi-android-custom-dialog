@@ -203,7 +203,7 @@
             </Delphi.Personality>
             <Deployment/>
             <Platforms>
-                <Platform value="Android" ActiveMobileDevice="rsxe5_android">True</Platform>
+                <Platform value="Android">True</Platform>
                 <Platform value="iOSDevice">False</Platform>
                 <Platform value="iOSSimulator">False</Platform>
                 <Platform value="OSX32">False</Platform>

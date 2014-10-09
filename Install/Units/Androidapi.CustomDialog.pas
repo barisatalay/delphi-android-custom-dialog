@@ -81,6 +81,8 @@ Type
         destructor              Destroy;         override;
         procedure               Assign(Source    : TPersistent); override;
         function                Add: TListBoxItem;
+        function                Count: Integer;
+        procedure               Clear;
         property                Item[const Index: Integer]     : TListBoxItem read GetItem; default;
       published
         property                ReturnText   : Boolean      read FReturn        write FReturn;
@@ -110,6 +112,7 @@ Type
     FValue                    : Single;
     FColor                    : TAlphaColor;
     FItem                     : TListViewItem;
+    TempClick                 : TNotifyEvent;
     function                  GetComboSetting: TComboSettings;
     procedure                 SetComboSetting(const Value: TComboSettings);
     procedure                 FreeNil;
@@ -138,16 +141,16 @@ Type
     destructor                Destroy; override;
     procedure                 Execute;
   published
-    property Parentx          : TControl       read FEdit         write SetComponent;
-    property Title            : String         read FTitle        write FTitle;
-    property Types            : TCustomType    read GetKind       write SetKind;
-    property TrackValue       : Single         read FValue        write FValue;
-    property ComboBoxSettings : TComboSettings read GetComboSet   write SetComboSet;
-    property TrackBarSettings : TTrackSettings read GetTrackSet   write SetTrackSet;
-    property EditSettings     : TEditSettings  read GetEditSet    write SetEditSet;
-    property BackgroundColor  : TAlphaColor    read GetColor      write SetColor default TAlphaColorRec.Black;
-    property OnPopUpClose     : TOnPopUpClose  read FOnPopUpClose write FOnPopUpClose;
-    property MenuSettings     : TMenuSettings  read GetMenuSet    write SetMenuSet;
+    property Parentx          : TControl       read FEdit          write SetComponent;
+    property Title            : String         read FTitle         write FTitle;
+    property Types            : TCustomType    read GetKind        write SetKind;
+    property TrackValue       : Single         read FValue         write FValue;
+    property ComboBoxSettings : TComboSettings read GetComboSet    write SetComboSet;
+    property TrackBarSettings : TTrackSettings read GetTrackSet    write SetTrackSet;
+    property EditSettings     : TEditSettings  read GetEditSet     write SetEditSet;
+    property BackgroundColor  : TAlphaColor    read GetColor       write SetColor default TAlphaColorRec.Black;
+    property OnPopUpClose     : TOnPopUpClose  read FOnPopUpClose  write FOnPopUpClose;
+    property MenuSettings     : TMenuSettings  read GetMenuSet     write SetMenuSet;
   end;
 
 procedure Register;
@@ -194,6 +197,7 @@ begin
   BG := TRectangle.Create(FForm);
   with Bg do
   begin
+    OnClick := IptalClick;
     Parent     := FForm AS TForm;
     {$IF CompilerVersion > 26}
       Align      := TAlignLayout.Contents;
@@ -460,6 +464,8 @@ begin
   if Parentx is TCustomEdit then
     (Parentx as TCustomEdit).ClearSelection;
 
+  if Assigned(TempClick) then
+    TempClick(Self);
   Execute;
 
   if FKind = TCustomType.Edit then
@@ -598,7 +604,10 @@ begin
       if not (Parentx is TListView) then
       begin
         if (Parentx is TControl) then
+        begin
+          TempClick := FClick;
           (Parentx as TControl).OnClick := FClick;
+        end;
       end else
         (Parentx as TListView).OnItemClick := LClick;
     end
@@ -887,6 +896,16 @@ begin
     end;
   end else
     inherited;
+end;
+
+procedure TCustomDialogs.TMenuSettings.Clear;
+begin
+  FItems.Clear;
+end;
+
+function TCustomDialogs.TMenuSettings.Count: Integer;
+begin
+  Result := FItems.Count;
 end;
 
 constructor TCustomDialogs.TMenuSettings.Create(AOwner: TCustomDialogs);
