@@ -1,0 +1,3 @@
+![http://3.bp.blogspot.com/-yk_JVYqoaww/VBvldQlx_fI/AAAAAAAAAqE/bkX-SeyvobE/s1600/Delphi_android_custom_dialog.png](http://3.bp.blogspot.com/-yk_JVYqoaww/VBvldQlx_fI/AAAAAAAAAqE/bkX-SeyvobE/s1600/Delphi_android_custom_dialog.png)
+
+![http://2.bp.blogspot.com/-X04J-yYtwnI/VBvldbDpS-I/AAAAAAAAAqI/rnat6TfuTas/s1600/Delphi_android_custom_dialog2.png](http://2.bp.blogspot.com/-X04J-yYtwnI/VBvldbDpS-I/AAAAAAAAAqI/rnat6TfuTas/s1600/Delphi_android_custom_dialog2.png)
